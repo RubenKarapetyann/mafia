@@ -1,5 +1,7 @@
 :root {
-
+  --gray : #252422;
+  --red : #F24B4B;
+  --white : #F2F0D8;
 }
 
 * {
@@ -14,8 +16,8 @@ body {
   overflow-x: hidden;
 }
 
-body {
-
+body{
+  background-color: var(--white);
 }
 
 a {
