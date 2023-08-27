@@ -1,0 +1,18 @@
+{
+  "name": "mafia",
+  "version": "1.0.0",
+  "description": "backend for mafia online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --require dotenv/config index.js"
+  },
+  "author": "Ruben Karapetyan",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
+}
