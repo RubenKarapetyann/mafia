@@ -2,6 +2,8 @@ import express from "express"
 import rooms from "./static/rooms.js"
 import { Server } from "socket.io" 
 import http from "http"
+import { DEFAULT, ROOMS } from "./constants/routes-constants.js"
+import { CONNECTION, DISCONNECT } from "./constants/socket-constants.js"
 
 const app = express()
 const server = http.createServer(app)
@@ -16,23 +18,24 @@ const io = new Server(server,{
 
 const staticRooms = rooms
 
-app.get("/",(req,res)=>{
+app.get(DEFAULT,(req,res)=>{
     res.json({ test : true })
 })
 
-app.get("/rooms",(req,res)=>{
+app.get(ROOMS,(req,res)=>{
     res.send({ rooms : staticRooms })
 })
 
 
-io.on("connection",(socket)=>{
+io.on(CONNECTION,(socket)=>{
     console.log("User connected.")
+    socket.emit("rooms",staticRooms)
     // const { roomId } = socket.handshake.query
     // socket.roomId = roomId
     // socket.join(roomId)
 
     
-    socket.on('disconnect', () => {
+    socket.on(DISCONNECT, () => {
         console.log('User disconnected.')
         // socket.leave(roomId)
     })

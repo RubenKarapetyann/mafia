@@ -8,6 +8,7 @@ export default function Logo({ styles }) {
         <Image
             src={logo}
             width={600}
+            alt="logo"
         />
     </div>
   )
