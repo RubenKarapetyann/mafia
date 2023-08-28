@@ -15,7 +15,7 @@ export default function Home() {
         />
         <br/>
         <MainButton
-          text={"Play"}
+          text={"PLAY"}
           link={endpoints().rooms}
         />
       </div>
