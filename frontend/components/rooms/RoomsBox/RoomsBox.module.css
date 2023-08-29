@@ -1,0 +1,10 @@
+.container{
+    padding: 10px;
+    width: 90%;
+    height: 70vh;
+    overflow-y: auto;
+    background-color: rgb(235, 235, 235);
+    margin: 0 auto;
+    box-shadow: inset 0px 0px 30px 4px rgb(193, 193, 193);
+    border-radius: 30px;
+}
