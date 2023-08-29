@@ -4,6 +4,7 @@
   --active-red : #f53030;
   --middle-active-red : #f33d3d;
   --white : #F2F0D8;
+  --active-gray: rgb(182, 182, 182);
 }
 
 * {
@@ -18,9 +19,9 @@ body {
   overflow-x: hidden;
 }
 
-body{
+/* body{
   /* background-color: var(--white); */
-}
+/* } */ 
 
 a {
   color: inherit;
