@@ -1,8 +1,9 @@
-import { CREATE, ROOMS } from "@/constants/routes-constants";
+import { CREATE, HOME, ROOMS } from "@/constants/routes-constants";
 
 export default function endpoints(){
     return {
         rooms : ROOMS,
-        create : CREATE
+        create : CREATE,
+        home : HOME
     }
 }

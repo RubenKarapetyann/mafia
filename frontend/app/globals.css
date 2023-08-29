@@ -28,8 +28,8 @@ a {
   text-decoration: none;
 }
 
-.container{
+.main{
   width: 80%;
   margin: 0 auto;
-  height: 100vh;
+  /* height: 100vh; */
 }
