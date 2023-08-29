@@ -1,6 +1,7 @@
 "use client"
 import { getRooms } from "@/api/rooms"
 import RoomsBox from "@/components/rooms/RoomsBox/RoomsBox"
+import RoomsList from "@/components/rooms/RoomsList/RoomsList"
 import { SERVER_URL } from "@/constants/api-constants"
 import { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
@@ -31,11 +32,10 @@ export default function Rooms(){
     return (
         <div className="container">
             <RoomsBox>
-                
+                <RoomsList
+                    rooms={rooms}
+                />
             </RoomsBox>
-            {/* {rooms.map(room=>{
-                return <p>{room.name}</p>
-            })} */}
         </div>
     )
 }
