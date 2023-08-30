@@ -1,7 +1,7 @@
 .container{
     width: 300px;
     min-height: 400px;
-    display: flex;
+    display: block;
     position: absolute;
     left: 50%;
     top: 50%;
