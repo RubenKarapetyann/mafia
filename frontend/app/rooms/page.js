@@ -1,10 +1,9 @@
 "use client"
 import { getRooms } from "@/api/rooms"
-import MainButton from "@/components/global/MainButton/MainButton"
 import RoomsBox from "@/components/rooms/RoomsBox/RoomsBox"
 import RoomsList from "@/components/rooms/RoomsList/RoomsList"
+import RoomTools from "@/components/rooms/RoomsTools/RoomsTools"
 import { SERVER_URL } from "@/constants/api-constants"
-import endpoints from "@/endpoints/client-endpoints"
 import { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
 
@@ -32,11 +31,8 @@ export default function Rooms(){
     },[])
 
     return (
-        <div className="container">
-            <MainButton
-                text={"CREATE"}
-                link={endpoints().create}
-            />
+        <div className="main">
+            <RoomTools/>
             <RoomsBox>
                 <RoomsList
                     rooms={rooms}
