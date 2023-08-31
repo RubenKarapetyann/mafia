@@ -1,0 +1,12 @@
+.buttons{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 0;
+}
+.innerContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 200px;
+}
