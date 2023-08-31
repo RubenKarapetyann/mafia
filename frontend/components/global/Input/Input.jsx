@@ -6,7 +6,7 @@ export default function Input({ value, setValue, placeholder }){
         <div>
             <input
                 value={value}
-                setValue={changeHandle}
+                onChange={changeHandle}
                 placeholder={placeholder}
                 className={styles.input}
             />

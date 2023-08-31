@@ -12,6 +12,8 @@ import io from "socket.io-client"
 export default function Rooms(){
     const socketRef = useRef(null)
     const [rooms, setRooms] = useState([])
+    const [isWindowOpen, setIsWindowOpen] = useState(false)
+    const [password, setPassword] = useState("")
     // const { rooms } = await getRooms()
 
     useEffect(()=>{
@@ -31,9 +33,22 @@ export default function Rooms(){
         }
     },[])
 
+    const changeHandle = password => {
+        setPassword(password)
+    }
+
+    const onClose = _ => {
+        setPassword("")
+        setIsWindowOpen(false)
+    }
+
     return (
         <div className="main">
-            <PrivateRoomWindow/>
+            { isWindowOpen && <PrivateRoomWindow
+                value={password}
+                changeHandle={changeHandle}
+                onClose={onClose}
+            /> }
             <RoomTools/>
             <RoomsBox>
                 <RoomsList
