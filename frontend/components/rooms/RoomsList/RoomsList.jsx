@@ -11,6 +11,7 @@ export default function RoomsList({ rooms }){
                     description={room.description}
                     players={room.players.length}
                     status={room.status}
+                    id={room.id}
                 />
             })}
         </div>

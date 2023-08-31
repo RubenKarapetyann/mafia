@@ -1,9 +1,10 @@
 import { CREATE, HOME, ROOMS } from "@/constants/routes-constants";
 
-export default function endpoints(){
+export default function endpoints(id){
     return {
         rooms : ROOMS,
         create : CREATE,
-        home : HOME
+        home : HOME,
+        room : `${ROOMS}/${id}`
     }
 }

@@ -1,9 +1,25 @@
+import Link from "next/link"
 import styles from "./SingleRoom.module.css"
 import { FaLock, FaLockOpen } from "react-icons/fa"
+import endpoints from "@/endpoints/client-endpoints"
 
-export default function SingleRoom({ name, description, players, status }){
+export default function SingleRoom({ name, description, players, status, id }){
+    let Wrapper
+    if(status === "open"){
+        Wrapper = ({ children })=>(
+            <Link className={styles.container} href={endpoints(id).room}>
+                {children}
+            </Link>
+        )
+    }else{
+        Wrapper = ({ children })=>(
+            <div className={styles.container}>
+                {children}
+            </div>
+        )
+    }
     return (
-        <div className={styles.container}>
+        <Wrapper>
             <div>
                 <p className={styles.name}>{name}</p>
                 <br/>
@@ -23,6 +39,6 @@ export default function SingleRoom({ name, description, players, status }){
                 </p>
                 }</p>
             </div>
-        </div>
+        </Wrapper>
     )
 }
