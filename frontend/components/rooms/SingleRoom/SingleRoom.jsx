@@ -3,20 +3,23 @@ import styles from "./SingleRoom.module.css"
 import { FaLock, FaLockOpen } from "react-icons/fa"
 import endpoints from "@/endpoints/client-endpoints"
 
-export default function SingleRoom({ name, description, players, status, id }){
+export default function SingleRoom({ name, description, players, status, id, onOpenWindow }){
     let Wrapper
     if(status === "open"){
         Wrapper = ({ children })=>(
-            <Link className={styles.container} href={endpoints(id).room}>
+            <Link className={styles.container} href={endpoints(id).lobby}>
                 {children}
             </Link>
         )
     }else{
-        Wrapper = ({ children })=>(
-            <div className={styles.container}>
+        Wrapper = ({ children })=>{
+            
+            const onOpenWindowId = ()=> onOpenWindow(id)
+
+            return (<div className={styles.container} onClick={onOpenWindowId}>
                 {children}
-            </div>
-        )
+            </div>)
+        }
     }
     return (
         <Wrapper>
@@ -27,7 +30,7 @@ export default function SingleRoom({ name, description, players, status, id }){
                 <p className={styles.players}>Игроков в комнате : {players} из {10}</p>
             </div>
             <div>
-                <p>{status === "open" ? 
+                <div>{status === "open" ? 
                 <p>
                     <span className={styles.openText}>открыто</span>
                     <FaLockOpen/>
@@ -37,7 +40,7 @@ export default function SingleRoom({ name, description, players, status, id }){
                     <span className={styles.withPasswordText}>с паролем</span>
                     <FaLock/>
                 </p>
-                }</p>
+                }</div>
             </div>
         </Wrapper>
     )

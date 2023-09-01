@@ -1,7 +1,7 @@
 import SingleRoom from "../SingleRoom/SingleRoom"
 import styles from "./RoomsList.module.css"
 
-export default function RoomsList({ rooms }){
+export default function RoomsList({ rooms, onOpenWindow }){
     return (
         <div>
             {rooms.map(room=>{
@@ -12,6 +12,7 @@ export default function RoomsList({ rooms }){
                     players={room.players.length}
                     status={room.status}
                     id={room.id}
+                    onOpenWindow={onOpenWindow}
                 />
             })}
         </div>

@@ -3,7 +3,8 @@ import WindowWrapper from "../WindowWrapper/WindowWrapper"
 import styles from "./PrivateRoomWindow.module.css"
 import Input from "@/components/global/Input/Input"
 
-export default function PrivateRoomWindow({ value, changeHandle, onClose }){
+export default function PrivateRoomWindow({ value, changeHandle, onClose, onJoin, id }){
+    const onJoinId = () => onJoin(id)
     return (
         <WindowWrapper title={"password"}>
             <div className={styles.innerContainer}>
@@ -21,6 +22,7 @@ export default function PrivateRoomWindow({ value, changeHandle, onClose }){
                     <FuncButton
                         text="join"
                         width={130}
+                        onClick={onJoinId}
                     />
                 </div>
             </div>
