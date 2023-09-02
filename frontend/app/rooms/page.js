@@ -16,7 +16,8 @@ export default function Rooms(){
     const [rooms, setRooms] = useState([])
     const [isWindowOpen, setIsWindowOpen] = useState({
         open : false,
-        id : null
+        id : null,
+        name : null
     })
     const [password, setPassword] = useState("")
     const router = useRouter()
@@ -47,14 +48,16 @@ export default function Rooms(){
         setPassword("")
         setIsWindowOpen({
             open : false,
-            id : null
+            id : null,
+            name : null
         })
     }
 
-    const onOpenWindow = id =>{
+    const onOpenWindow = ( id, name ) =>{
         setIsWindowOpen({
             open : true,
-            id
+            id,
+            name
         })
     }
 
@@ -90,6 +93,7 @@ export default function Rooms(){
                 onClose={onClose}
                 onJoin={onJoin}
                 id={isWindowOpen.id}
+                title={isWindowOpen.name}
             /> }
             <RoomTools/>
             <RoomsBox>

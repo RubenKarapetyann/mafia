@@ -10,3 +10,8 @@
     display: flex;
     gap: 5px;
 }
+@media (max-width : 450px) {
+    .container > div{
+        width: 150px;
+    }
+}

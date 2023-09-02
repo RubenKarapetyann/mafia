@@ -14,7 +14,7 @@ export default function SingleRoom({ name, description, players, status, id, onO
     }else{
         Wrapper = ({ children })=>{
             
-            const onOpenWindowId = ()=> onOpenWindow(id)
+            const onOpenWindowId = ()=> onOpenWindow(id, name)
 
             return (<div className={styles.container} onClick={onOpenWindowId}>
                 {children}
@@ -23,23 +23,23 @@ export default function SingleRoom({ name, description, players, status, id, onO
     }
     return (
         <Wrapper>
-            <div>
+            <div className={styles.leftPart}>
                 <p className={styles.name}>{name}</p>
                 <br/>
                 <p className={styles.description}>Описание : {description}</p>
                 <p className={styles.players}>Игроков в комнате : {players} из {10}</p>
             </div>
-            <div>
+            <div className={styles.rightPart}>
                 <div>{status === "open" ? 
-                <p>
-                    <span className={styles.openText}>открыто</span>
-                    <FaLockOpen/>
-                </p>
-                 : 
-                <p>
-                    <span className={styles.withPasswordText}>с паролем</span>
-                    <FaLock/>
-                </p>
+                    <p>
+                        <span className={styles.openText}>открыто</span>
+                        <FaLockOpen/>
+                    </p>
+                    : 
+                    <p>
+                        <span className={styles.withPasswordText}>с паролем</span>
+                        <FaLock/>
+                    </p>
                 }</div>
             </div>
         </Wrapper>
