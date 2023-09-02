@@ -6,7 +6,7 @@ import Input from "@/components/global/Input/Input"
 export default function PrivateRoomWindow({ value, changeHandle, onClose, onJoin, id }){
     const onJoinId = () => onJoin(id)
     return (
-        <WindowWrapper title={"password"}>
+        <WindowWrapper title={"password"} onClose={onClose}>
             <div className={styles.innerContainer}>
                 <p>Password</p>
                 <Input

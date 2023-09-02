@@ -59,17 +59,26 @@ export default function Rooms(){
     }
 
     const onJoin = async id => {
-        const response = await fetch(endpoints(id).room,{
-            method : "POST",
-            body : JSON.stringify({
-                password
+        try{
+            const response = await fetch(endpoints().rooms,{
+                method : "POST",
+                headers : {
+                    'Content-Type': 'application/json',
+                },
+                body : JSON.stringify({
+                    password : password,
+                    id : id
+                })
             })
-        })
-        const result = await response.json()
-        if( result.access ){
-            router.push(clientEndpoints(id).lobby)
-        }else{
+            const result = await response.json()
+            if( result.access ){
+                router.push(clientEndpoints(id).lobby)
+            }else{
+                onClose()
+            }
+        }catch(err){
             onClose()
+            console.log(err);
         }
     }
 

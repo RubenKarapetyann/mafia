@@ -3,7 +3,7 @@ import styles from "./RoomsList.module.css"
 
 export default function RoomsList({ rooms, onOpenWindow }){
     return (
-        <div>
+        <div className={styles.container}>
             {rooms.map(room=>{
                 return <SingleRoom
                     key={room.id}
