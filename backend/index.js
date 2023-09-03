@@ -74,8 +74,10 @@ io.on(CONNECTION,(socket)=>{
 
 
     socket.on("room:quit",(payload)=>{
-        const room = staticRooms.find(room=>room.id===roomId)
-        room.players = room.players.filter(player=>player.id!==payload.id)
+        const room = staticRooms.find(room=>room.id===+roomId)
+        const decoded = jwt.verify(payload.token, process.env.JWT_KEY);
+        room.players = room.players.filter(player=>player.id!==decoded.id)
+        io.emit("rooms",staticRooms)
     })
     
 
@@ -86,8 +88,9 @@ io.on(CONNECTION,(socket)=>{
         socket.join(roomId)
 
         const room = staticRooms.find(room=>room.id===+roomId)
+        const decoded = jwt.verify(socket.handshake.query.token, process.env.JWT_KEY);
         const player = {
-            id : Math.random(),
+            id : decoded.id,
             role : null,
             name : "Ruben"
         }
