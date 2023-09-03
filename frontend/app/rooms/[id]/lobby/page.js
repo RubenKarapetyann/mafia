@@ -1,4 +1,6 @@
 "use client"
+import Form from "@/components/chat/form/Form"
+import styles from "./page.module.css"
 import { SERVER_URL } from "@/constants/api-constants"
 import { getToken } from "@/utils/jwt-utils"
 import { useEffect, useRef, useState } from "react"
@@ -7,6 +9,7 @@ import io from "socket.io-client"
 export default function Lobby({ params : { id } }) {
   const socketRef = useRef(null)
   const [user,setUser] = useState(null)
+  const [message, setMessage] = useState("")
 
   const onDisconnect = ()=>{
     const payload = {
@@ -24,19 +27,29 @@ export default function Lobby({ params : { id } }) {
       setUser(user)
     })
 
-
     return () => {
       onDisconnect()
       socketRef.current.disconnect()  
     }
   },[])
 
+  const changeHandle = text => setMessage(message)
+
+  const submitHandle = e =>{
+    e.preventDefault()
+  }
+
 
   return (
-    <div>
-      {id}`s lobby
-
-      {JSON.stringify(user)}
+    <div className="main">
+      <div className={styles.container}> 
+        {id}`s lobby
+        <Form
+          value={message}
+          setValue={changeHandle}
+          submitHandle={submitHandle}
+        />
+      </div>
     </div>
   )
 }
