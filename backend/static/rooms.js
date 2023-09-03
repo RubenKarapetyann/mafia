@@ -11,6 +11,13 @@ const rooms = [
                 role : "mafia",
                 id : 1
             }
+        ],
+        messages : [
+            {
+                text : "hello",
+                id : 1,
+                autherId : 1
+            }
         ]
     },
     {
@@ -25,7 +32,8 @@ const rooms = [
                 role : "mafia",
                 id : 1
             }
-        ]
+        ],
+        messages : []
     }
 ]
 

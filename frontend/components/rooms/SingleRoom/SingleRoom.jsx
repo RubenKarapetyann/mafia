@@ -3,24 +3,17 @@ import styles from "./SingleRoom.module.css"
 import { FaLock, FaLockOpen } from "react-icons/fa"
 import endpoints from "@/endpoints/client-endpoints"
 
-export default function SingleRoom({ name, description, players, status, id, onOpenWindow }){
-    let Wrapper
-    if(status === "open"){
-        Wrapper = ({ children })=>(
-            <Link className={styles.container} href={endpoints(id).lobby}>
+export default function SingleRoom({ name, description, players, status, id, onOpenWindow, onJoin }){
+    const Wrapper = ({ children })=>{
+        const onOpenWindowId = ()=> onOpenWindow(id, name)
+        const onJoinId = ()=> onJoin(id)
+        return (
+            <div className={styles.container} onClick={status === "open" ? onJoinId : onOpenWindowId}>
                 {children}
-            </Link>
+            </div>
         )
-    }else{
-        Wrapper = ({ children })=>{
-            
-            const onOpenWindowId = ()=> onOpenWindow(id, name)
-
-            return (<div className={styles.container} onClick={onOpenWindowId}>
-                {children}
-            </div>)
-        }
     }
+        
     return (
         <Wrapper>
             <div className={styles.leftPart}>

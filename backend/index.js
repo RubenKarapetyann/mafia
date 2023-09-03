@@ -6,7 +6,7 @@ import { DEFAULT, ROOMS } from "./constants/routes-constants.js"
 import { CONNECTION, DISCONNECT } from "./constants/socket-constants.js"
 import bcrypt from "bcrypt"
 import cors from "cors"
-
+import jwt from "jsonwebtoken"
 
 const app = express()
 const server = http.createServer(app)
@@ -36,32 +36,71 @@ app.get(ROOMS,(req,res)=>{
 app.post(ROOMS,async (req,res)=>{
     const { password, id } = req.body
     const room = staticRooms.find(room=>room.id === id)
+    
+    if( room.status === "open" ){
+        const token = jwt.sign({ id : Math.random() }, process.env.JWT_KEY);
+        return res.status(400).json({
+            access : true,
+            token
+        })
+    }
 
     const validPassword = await bcrypt.compare( password, room.password )
 
     if(validPassword){
+        const token = jwt.sign({ id : Math.random() }, process.env.JWT_KEY);
         res.status(400).json({
-            access : true
+            access : true,
+            token
         })
     }else{
         res.status(401).json({
             access : false
         })
     }
-    res.send({ access : true })
 })
 
 io.on(CONNECTION,(socket)=>{
     console.log("User connected.")
-    socket.emit("rooms",staticRooms)
-    // const { roomId } = socket.handshake.query
-    // socket.roomId = roomId
-    // socket.join(roomId)
 
+    const sendMessage = (message)=>{
+        io.in(socket.roomId).emit('message:add', message)
+    }
+
+
+    socket.on("rooms",()=>{
+        socket.emit("rooms",staticRooms)
+    })
+
+
+    socket.on("room:quit",(payload)=>{
+        const room = staticRooms.find(room=>room.id===roomId)
+        room.players = room.players.filter(player=>player.id!==payload.id)
+    })
     
+
+    const { roomId } = socket.handshake.query
+    if( roomId ){
+        console.log(`User connected to ${roomId}.`);
+        socket.roomId = roomId
+        socket.join(roomId)
+
+        const room = staticRooms.find(room=>room.id===+roomId)
+        const player = {
+            id : Math.random(),
+            role : null,
+            name : "Ruben"
+        }
+        room.players.push(player)
+        socket.emit("room:join",player)
+        io.emit("rooms",staticRooms)
+    }
+
+
     socket.on(DISCONNECT, () => {
         console.log('User disconnected.')
-        // socket.leave(roomId)
+        console.log(`User disconnected from ${roomId}.`);
+        socket.leave(roomId)
     })
 })
 

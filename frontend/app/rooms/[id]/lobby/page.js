@@ -1,7 +1,15 @@
+"use client"
+
 
 export default function Lobby({ params : { id } }) {
-    return (
-      <>{id}`s lobby</>
-    )
+
+
+  return (
+    <div>
+      {id}`s lobby
+
+      {/* {JSON.stringify(user)} */}
+    </div>
+  )
 }
   

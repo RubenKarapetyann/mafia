@@ -9,6 +9,7 @@ import clientEndpoints from "@/endpoints/client-endpoints"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
+import { setToken } from "@/utils/jwt-utils"
 
 
 export default function Rooms(){
@@ -21,19 +22,15 @@ export default function Rooms(){
     })
     const [password, setPassword] = useState("")
     const router = useRouter()
-    // const { rooms } = await getRooms()
 
     useEffect(()=>{
         socketRef.current = io(SERVER_URL)
 
+        socketRef.current.emit("rooms")
 
         socketRef.current.on("rooms",(rooms)=>{
             setRooms(rooms)
         })
-
-        // {
-        //     query: { roomId : id }
-        // }
 
         return () => {
             socketRef.current.disconnect()
@@ -75,6 +72,7 @@ export default function Rooms(){
             })
             const result = await response.json()
             if( result.access ){
+                setToken(result.token)
                 router.push(clientEndpoints(id).lobby)
             }else{
                 onClose()
@@ -100,6 +98,7 @@ export default function Rooms(){
                 <RoomsList
                     rooms={rooms}
                     onOpenWindow={onOpenWindow}
+                    onJoin={onJoin}
                 />
             </RoomsBox>
         </div>
