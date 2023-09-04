@@ -33,7 +33,7 @@ export default function Lobby({ params : { id } }) {
     }
   },[])
 
-  const changeHandle = text => setMessage(message)
+  const changeHandle = text => setMessage(text)
 
   const submitHandle = e =>{
     e.preventDefault()
