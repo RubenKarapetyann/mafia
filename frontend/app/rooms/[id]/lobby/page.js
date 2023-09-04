@@ -5,6 +5,7 @@ import { SERVER_URL } from "@/constants/api-constants"
 import { getToken } from "@/utils/jwt-utils"
 import { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
+import ChatBox from "@/components/chat/ChatBox/ChatBox"
 
 export default function Lobby({ params : { id } }) {
   const socketRef = useRef(null)
@@ -43,7 +44,11 @@ export default function Lobby({ params : { id } }) {
   return (
     <div className="main">
       <div className={styles.container}> 
-        {id}`s lobby
+        <div className={styles.chatContainer}>
+          <ChatBox
+
+          />
+        </div>
         <Form
           value={message}
           setValue={changeHandle}
