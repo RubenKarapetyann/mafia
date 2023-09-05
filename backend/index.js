@@ -97,6 +97,22 @@ io.on(CONNECTION,(socket)=>{
         room.players.push(player)
         socket.emit("room:join",player)
         io.emit("rooms",staticRooms)
+
+        const sendRoom = {
+            ...room,
+            messages : room.messages.map(message=>{
+                const player = room.players.find(player=>player.id===message.autherId)
+                return {
+                    ...message,
+                    player : {
+                        avatar : player.avatar,
+                        name : player.name
+                    }
+
+                }
+            })
+        }
+        io.emit("room:update",sendRoom)
     }
 
 

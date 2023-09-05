@@ -1,0 +1,23 @@
+.container{
+    height: fit-content;
+    display: flex;
+    padding: 10px;
+    gap: 5px;
+}
+.textBox{
+    width: fit-content;
+    word-break: normal;
+    max-width: 100%;
+    height: fit-content;
+    padding: 8px;
+    background-color: var(--red);
+    color: white;
+    border-radius: 10px 10px 10px 0;
+}
+.avatarContainer{
+    display: flex;
+    align-items: end;
+}
+.name{
+    font-size: 12px;
+}

@@ -9,13 +9,19 @@ const rooms = [
             {
                 name : "Ruben",
                 role : "mafia",
-                id : 1
+                id : 1,
+                avatar : "https://ionicframework.com/docs/img/demos/avatar.svg"
             }
         ],
         messages : [
             {
                 text : "hello",
                 id : 1,
+                autherId : 1
+            },
+            {
+                text : "hello hasdy jaskd nhy vsdik n uasfkafn jaf sdni sdu fsodb siudm ijsmvo jmfvoierbv iebmf ijerovi enmronemr v",
+                id : 2,
                 autherId : 1
             }
         ]
@@ -30,7 +36,8 @@ const rooms = [
             {
                 name : "Vrdo",
                 role : "mafia",
-                id : 1
+                id : 1,
+                avatar : "https://ionicframework.com/docs/img/demos/avatar.svg"
             }
         ],
         messages : []

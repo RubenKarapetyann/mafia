@@ -10,8 +10,10 @@ import ChatBox from "@/components/chat/ChatBox/ChatBox"
 export default function Lobby({ params : { id } }) {
   const socketRef = useRef(null)
   const [user,setUser] = useState(null)
-  const [message, setMessage] = useState("")
+  const [room, setRoom] = useState(null)
 
+ 
+  
   const onDisconnect = ()=>{
     const payload = {
       token : getToken()
@@ -24,8 +26,12 @@ export default function Lobby({ params : { id } }) {
       query: { roomId : id, token : getToken() }
     })
 
-    socketRef.current.on("room:join",(user)=>{
+    socketRef.current.on("room:join",user=>{
       setUser(user)
+    })
+
+    socketRef.current.on("room:update",room=>{
+      setRoom(room)
     })
 
     return () => {
@@ -34,7 +40,9 @@ export default function Lobby({ params : { id } }) {
     }
   },[])
 
-  const changeHandle = text => setMessage(text)
+  if(!room){
+    return
+  }
 
   const submitHandle = e =>{
     e.preventDefault()
@@ -46,12 +54,10 @@ export default function Lobby({ params : { id } }) {
       <div className={styles.container}> 
         <div className={styles.chatContainer}>
           <ChatBox
-
+            messages={room.messages}
           />
         </div>
         <Form
-          value={message}
-          setValue={changeHandle}
           submitHandle={submitHandle}
         />
       </div>
