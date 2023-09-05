@@ -34,6 +34,13 @@ export default function Lobby({ params : { id } }) {
       setRoom(room)
     })
 
+    socketRef.current.on("message:add",message=>{
+      setRoom(room=>({
+        ...room,
+        messages : [...room.messages, message]
+      }))
+    })
+
     return () => {
       onDisconnect()
       socketRef.current.disconnect()  
@@ -44,8 +51,12 @@ export default function Lobby({ params : { id } }) {
     return
   }
 
-  const submitHandle = e =>{
-    e.preventDefault()
+  const submitHandle = message =>{
+    const payload = {
+      message,
+      token : getToken()
+    }
+    socketRef.current.emit("message:add",payload)
   }
 
 

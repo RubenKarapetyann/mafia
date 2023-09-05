@@ -6,10 +6,16 @@ import { useState } from "react"
 export default function Form({ submitHandle }){
     const [value, setValue] = useState("")
 
-    const changeHandle = text => setValue(text)
+    const changeHandle = text => setValue(text) 
+
+    const onSubmit = e =>{
+        e.preventDefault()
+        submitHandle(value)
+        setValue("")
+    }
 
     return (
-        <form className={styles.container} onSubmit={submitHandle}>
+        <form className={styles.container} onSubmit={onSubmit}>
             <div className={styles.InnerContainer}>
                 <Input
                     placeholder="message..."

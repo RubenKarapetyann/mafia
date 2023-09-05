@@ -73,6 +73,28 @@ io.on(CONNECTION,(socket)=>{
     })
 
 
+    socket.on("message:add",payload=>{
+        const room = staticRooms.find(room=>room.id===+socket.roomId)
+        const decoded = jwt.verify(payload.token, process.env.JWT_KEY)
+        const player = room.players.find(player=>player.id===+decoded.id)
+
+        const message = {
+            text : payload.message,
+            id : Math.random(),
+            autherId : player.id
+        }
+        room.messages.push(message)
+
+        sendMessage({
+            ...message,
+            player : {
+                avatar : player.avatar,
+                name : player.name
+            }
+        })
+    })
+
+
     socket.on("room:quit",(payload)=>{
         const room = staticRooms.find(room=>room.id===+roomId)
         const decoded = jwt.verify(payload.token, process.env.JWT_KEY);
@@ -92,7 +114,8 @@ io.on(CONNECTION,(socket)=>{
         const player = {
             id : decoded.id,
             role : null,
-            name : "Ruben"
+            name : "Ruben",
+            avatar : "https://ionicframework.com/docs/img/demos/avatar.svg"
         }
         room.players.push(player)
         socket.emit("room:join",player)
