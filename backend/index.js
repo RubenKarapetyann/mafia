@@ -7,6 +7,7 @@ import { CONNECTION, DISCONNECT } from "./constants/socket-constants.js"
 import bcrypt from "bcrypt"
 import cors from "cors"
 import jwt from "jsonwebtoken"
+import { JOIN, NOTIFICATION_TYPE, QUIT } from "./constants/notification-constants.js"
 
 const app = express()
 const server = http.createServer(app)
@@ -96,9 +97,22 @@ io.on(CONNECTION,(socket)=>{
 
 
     socket.on("room:quit",(payload)=>{
+        let player
         const room = staticRooms.find(room=>room.id===+roomId)
         const decoded = jwt.verify(payload.token, process.env.JWT_KEY);
-        room.players = room.players.filter(player=>player.id!==decoded.id)
+
+        room.players = room.players.filter(currentPlayer=>(
+            currentPlayer.id!==decoded.id ? player=currentPlayer || true : false
+        ))
+
+
+        const notification = {
+            id : Math.random(),
+            text : `${player.name} отсоединился`,
+            type : NOTIFICATION_TYPE,     
+            action : QUIT
+        }
+        room.messages.push(notification)
         io.emit("rooms",staticRooms)
     })
     
@@ -118,12 +132,22 @@ io.on(CONNECTION,(socket)=>{
             avatar : "https://ionicframework.com/docs/img/demos/avatar.svg"
         }
         room.players.push(player)
+        const notification = {
+            id : Math.random(),
+            text : `${player.name} присоединился`,
+            type : NOTIFICATION_TYPE,     
+            action : JOIN
+        }
+        room.messages.push(notification)
         socket.emit("room:join",player)
         io.emit("rooms",staticRooms)
 
         const sendRoom = {
             ...room,
             messages : room.messages.map(message=>{
+                if( message.type === NOTIFICATION_TYPE ){
+                    return message
+                }
                 const player = room.players.find(player=>player.id===message.autherId)
                 return {
                     ...message,
@@ -134,8 +158,8 @@ io.on(CONNECTION,(socket)=>{
 
                 }
             })
-        }
-        io.emit("room:update",sendRoom)
+        } 
+        io.emit("room:update",sendRoom) 
     }
 
 
