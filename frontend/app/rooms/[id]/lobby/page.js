@@ -66,7 +66,8 @@ export default function Lobby({ params : { id } }) {
       <div className={styles.container}> 
         <div className={styles.chatContainer}>
           <InformationStand
-            room={room.name}
+            name={room.name}
+            players={room.players}
           />
           <ChatBox
             messages={room.messages}
