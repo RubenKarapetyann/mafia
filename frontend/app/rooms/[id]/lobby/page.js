@@ -6,6 +6,7 @@ import { getToken } from "@/utils/jwt-utils"
 import { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
 import ChatBox from "@/components/chat/ChatBox/ChatBox"
+import InformationStand from "@/components/more/informationStand/InformationStand"
 
 export default function Lobby({ params : { id } }) {
   const socketRef = useRef(null)
@@ -64,6 +65,9 @@ export default function Lobby({ params : { id } }) {
     <div className="main">
       <div className={styles.container}> 
         <div className={styles.chatContainer}>
+          <InformationStand
+            room={room.name}
+          />
           <ChatBox
             messages={room.messages}
           />
